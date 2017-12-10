@@ -1,16 +1,12 @@
 package fib.adp.Classes;
 
+import fib.adp.Interface.ICalc;
 import fib.adp.Interface.IFuncionarioCalc;
 
-public class CalcularSalarioComissao implements IFuncionarioCalc {
-	
-	private FuncionarioComissionado funcionario;
-	public CalcularSalarioComissao(FuncionarioComissionado funcionario) {
-	   this.funcionario = funcionario;	
-	}
+public class CalcularSalarioComissao implements ICalc {
 
 	@Override
-	public double receberPgto() {
+	public double calcularSalario(IFuncionarioCalc funcionario) {
 		double vlSalario = 0.0;
 		double vlComissao = 0.0;
 		
@@ -18,16 +14,11 @@ public class CalcularSalarioComissao implements IFuncionarioCalc {
 
 		vlSalario = vlSalario - (vlSalario * 0.11); // INSS
 		
-		vlComissao = (funcionario.getValorTotalVendas() * (funcionario.getComissao()/100)); //CALCULO COMISSAO SOBRE VENDAS
+		vlComissao = (funcionario.getTotalVendas() * (funcionario.getComissao()/100)); //CALCULO COMISSAO SOBRE VENDAS
 		
 		vlSalario = vlSalario + vlComissao;
 		
 		return vlSalario;
-	}
-
-	@Override
-	public String dadosFuncionario() {
-		return "Nome: " + funcionario.getNome() + " Cargo " + funcionario.getCargo().name() + " ";
 	}
 
 }

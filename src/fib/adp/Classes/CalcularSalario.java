@@ -1,28 +1,18 @@
 package fib.adp.Classes;
 
+import fib.adp.Interface.ICalc;
 import fib.adp.Interface.IFuncionarioCalc;
 
-public class CalcularSalario implements IFuncionarioCalc {
+public class CalcularSalario implements ICalc {
 
-	private FuncionarioSalario funcionario;
-	public CalcularSalario(FuncionarioSalario funcionario) {
-	   this.funcionario = funcionario;	
-	}
-	
 	@Override
-	public double receberPgto() {
+	public double calcularSalario(IFuncionarioCalc funcionario) {
 		double vlSalario = 0.0;
 		
 		vlSalario = funcionario.getSalario() - (funcionario.getSalario()  * 0.06);	//Taxa governo
 		
 		vlSalario = vlSalario - (vlSalario * 0.11); //INSS
-		return 0;
+		return vlSalario;
 	}
-
-	@Override
-	public String dadosFuncionario() {
-		return "Nome: " + funcionario.getNome() + " Cargo " + funcionario.getCargo().name() + " ";
-	}
-	
 
 }

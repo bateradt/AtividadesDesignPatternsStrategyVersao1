@@ -1,17 +1,19 @@
 package fib.adp.Classes;
 
 import fib.adp.Enum.ECargos;
+import fib.adp.Interface.ICalc;
 import fib.adp.Interface.IFuncionarioCalc;
 
 public class FuncionarioComissionado implements IFuncionarioCalc {
 
 	public FuncionarioComissionado(String nome, Double salario, Double comissao, Double valorTotalVendas,
-			ECargos cargo) {
+			ECargos cargo, ICalc calculosalario) {
 		this.nome = nome;
 		this.salario = salario;
 		this.comissao = comissao;
 		this.valorTotalVendas = valorTotalVendas;
 		this.cargo = cargo;
+		this.calculosalario = calculosalario;
 	}
 
 	private Double salario;
@@ -19,6 +21,7 @@ public class FuncionarioComissionado implements IFuncionarioCalc {
 	private Double valorTotalVendas;
 	private ECargos cargo;
 	private String nome;
+	private ICalc calculosalario;
 
 	public Double getValorTotalVendas() {
 		return valorTotalVendas;
@@ -44,16 +47,9 @@ public class FuncionarioComissionado implements IFuncionarioCalc {
 		this.cargo = cargo;
 	}
 
-	public Double getComissao() {
-		return comissao;
-	}
 
 	public void setComissao(Double comissao) {
 		this.comissao = comissao;
-	}
-
-	public Double getSalario() {
-		return salario;
 	}
 
 	public void setSalario(Double salario) {
@@ -62,25 +58,30 @@ public class FuncionarioComissionado implements IFuncionarioCalc {
 
 	@Override
 	public double receberPgto() { //efetua o cálculo de acordo com o cargo dele
-		Double vlSalario = 0.0;
-		Double vlComissao = 0.0;
-
-		if ((cargo.equals(ECargos.VENDEDOR)) || (cargo.equals(ECargos.DIRETORCOMERCIAL))) {
-			vlSalario = salario - (salario * 0.06); // Taxa governo
-
-			vlSalario = vlSalario - (vlSalario * 0.11); // INSS
-			
-			vlComissao = (valorTotalVendas * (comissao/100)); //CALCULO COMISSAO SOBRE VENDAS
-			
-			vlSalario = vlSalario + vlComissao;
-		}
-
-		return vlSalario;
+		return calculosalario.calcularSalario(this);
 	}
 	
 	@Override
 	public String dadosFuncionario() {
 		return "Nome: " + getNome() + " Cargo " + cargo.name() + " ";
+	}
+
+	@Override
+	public double getSalario() {
+		// TODO Auto-generated method stub
+		return this.salario;
+	}
+
+	@Override
+	public double getComissao() {
+		// TODO Auto-generated method stub
+		return this.comissao;
+	}
+
+	@Override
+	public double getTotalVendas() {
+		// TODO Auto-generated method stub
+		return this.valorTotalVendas;
 	}
 
 }

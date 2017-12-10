@@ -1,23 +1,14 @@
 package fib.adp.Classes;
 
+import fib.adp.Interface.ICalc;
 import fib.adp.Interface.IFuncionarioCalc;
 
-public class CalculaProLabore implements IFuncionarioCalc {
+public class CalculaProLabore implements ICalc {
 	
-	private Diretores funcionario;
-	
-	public CalculaProLabore(Diretores funcionario) {
-		this.funcionario = funcionario;
+	@Override
+	public double calcularSalario(IFuncionarioCalc funcionario) {
+		return funcionario.getSalario() - (funcionario.getSalario() * 0.02); //Taxa governo
 	}
 
-	@Override
-	public double receberPgto() {
-		return funcionario.getSalario() - (funcionario.getSalario() * 0.02);	//Taxa governo
-	}
-
-	@Override
-	public String dadosFuncionario() {
-		return "Nome: " + funcionario.getNome() + " Cargo " + funcionario.getCargo().name() + " ";
-	}
 	
 }
